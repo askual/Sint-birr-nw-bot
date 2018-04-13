@@ -1,0 +1,20 @@
+{
+    "name": "sintbirrnw",
+    "version": "1.0.0",
+    "description": "Know how much that file costs",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": [
+        "telegram",
+        "bot",
+        "cost"
+    ],
+    "author": "yonny da",
+    "license": "ISC",
+    "dependencies": {
+        "bytes": "^3.0.0",
+        "node-telegram-bot-api": "^0.30.0"
+    }
+}

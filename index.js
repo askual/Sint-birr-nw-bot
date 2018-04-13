@@ -7,7 +7,7 @@ const options = {
     }
 };
 
-const url = process.env.APP_URL || 'https://sintbirrnw.herokuapp.com/';
+const url = process.env.APP_URL || 'https://sintbirrnw.herokuapp.com:443';
 const bot = new TelegramBot(TOKEN, options);
 bot.setWebHook(`${url}/bot${TOKEN}`);
 

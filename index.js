@@ -34,7 +34,11 @@ function calcPrice(size, p) {
         pak = 'on data package';
     }
     let cost = (rate * size) / 1048576;
-    return cost.toFixed(2) + ' Birr';
+    if (cost == NaN) {
+        return '0.00';
+    } else {
+        return cost.toFixed(2) + ' Birr' + pak;
+    }
 
 
 }
@@ -42,7 +46,7 @@ function calcPrice(size, p) {
 function returnPrice(size, p, type, msg) {
     let cnvrtd = calcPrice(size, p);
     bot.answerCallbackQuery(msg.id);
-    bot.sendMessage(msg.from.id, `This ${type} file costs around *${cnvrtd}* ${pak}.`, { parse_mode: "markdown" });
+    bot.sendMessage(msg.from.id, `This ${type} file costs around *${cnvrtd}*.`, { parse_mode: "markdown" });
 
 }
 

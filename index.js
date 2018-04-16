@@ -34,11 +34,9 @@ function calcPrice(size, p) {
         pak = 'on data package';
     }
     let cost = (rate * size) / 1048576;
-    if (cost == NaN) {
-        return '0.00';
-    } else {
-        return cost.toFixed(2) + ' Birr ' + pak;
-    }
+
+    return cost.toFixed(2) + ' Birr ' + pak;
+
 
 
 }
@@ -65,8 +63,8 @@ bot.on('message', (msg) => {
         type = 'voice'
 
     } else if (msg.photo != null) {
-        fileSize = msg.photo.file_size;
-        type = 'photo'
+        bot.sendMessage(msg.chat.id, 'Please send/forward me any type of file like audio, video and other big files.. photos cost almost to noting.')
+        return;
 
     } else if (msg.document != null) {
         fileSize = msg.document.file_size;
@@ -80,7 +78,7 @@ bot.on('message', (msg) => {
     } else if (msg.text === '/start' || msg.text === '/help') {
         return;
     } else {
-        bot.sendMessage(msg.chat.id, 'Please send/forward me any type of file like audio, video, pictures.')
+        bot.sendMessage(msg.chat.id, 'Please send/forward me any type of file like audio, video and other big files.')
         return;
     }
 

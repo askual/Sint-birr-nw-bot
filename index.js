@@ -78,7 +78,7 @@ bot.on('message', (msg) => {
         return;
     }
 
-    bot.sendMessage(msd.chat.id, 'Are you on package? \n ፓኬጅ አየተጠቀሙ ነው?', {
+    bot.sendMessage(msg.chat.id, 'Are you on package? \n ፓኬጅ አየተጠቀሙ ነው?', {
         reply_markup: {
             inline_keyboard: [
                 [{

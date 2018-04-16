@@ -28,8 +28,10 @@ let type;
 // Mebibyte = 1024^2 bytes but Megabyte = 1000^2 
 function calcPrice(size, p) {
     let rate = .35;
+    let pak = 'on mobile data';
     if (p) {
         rate = .23
+        pak = 'on data package'
     }
     let cost = (rate * size) / 1048576;
     return cost.toFixed(2) + ' Birr';
@@ -40,7 +42,7 @@ function calcPrice(size, p) {
 function returnPrice(size, p, type, msg) {
     let cnvrtd = calcPrice(size, p);
     bot.answerCallbackQuery(msg.id);
-    bot.sendMessage(msg.from.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
+    bot.sendMessage(msg.from.id, `This ${type} file costs around *${cnvrtd}* ${pak}.`, { parse_mode: "markdown" });
 
 }
 
@@ -82,11 +84,11 @@ bot.on('message', (msg) => {
         reply_markup: {
             inline_keyboard: [
                 [{
-                    text: 'Yes',
+                    text: 'Yes, ፓኬጅ ገዝቻለው።',
                     callback_data: 'p'
                 }],
                 [{
-                    text: 'No',
+                    text: 'No, ፓኬጅ አልገዛውም።',
                     callback_data: 'noP'
 
                 }]
@@ -101,13 +103,7 @@ bot.on('message', (msg) => {
 bot.on('callback_query', (msg) => {
     let c_data = msg.data;
 
-    if (c_data === 'step1') {
-        bot.sendPhoto(msg.from.id, '')
-    } else if (c_data === 'step2') {
-
-    } else if (c_data === 'step3') {
-
-    } else if (c_data === 'p') {
+    if (c_data === 'p') {
 
         returnPrice(fileSize, true, type, msg);
 

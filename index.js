@@ -37,7 +37,7 @@ function calcPrice(size, p) {
     if (cost == NaN) {
         return '0.00';
     } else {
-        return cost.toFixed(2) + ' Birr' + pak;
+        return cost.toFixed(2) + ' Birr ' + pak;
     }
 
 

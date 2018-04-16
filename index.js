@@ -37,9 +37,9 @@ function calcPrice(size, p) {
 
 }
 
-function returnPrice(size, p, type) {
+function returnPrice(size, p, type, msg) {
     let cnvrtd = calcPrice(size, p);
-    bot.sendMessage(msg.chat.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
+    bot.sendMessage(msg.from.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
 
 
 }
@@ -109,11 +109,11 @@ bot.on('callback_query', (msg) => {
 
     } else if (c_data === 'p') {
         bot.answerCallbackQuery(msg.from.id);
-        returnPrice(fileSize, true, type);
+        returnPrice(fileSize, true, type, msg);
 
     } else if (c_data === 'noP') {
         bot.answerCallbackQuery(msg.from.id);
-        returnPrice(fileSize, false, type);
+        returnPrice(fileSize, false, type, msg);
 
     }
 

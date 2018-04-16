@@ -39,8 +39,8 @@ function calcPrice(size, p) {
 
 function returnPrice(size, p, type, msg) {
     let cnvrtd = calcPrice(size, p);
+    bot.answerCallbackQuery(msg.id);
     bot.sendMessage(msg.from.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
-
 
 }
 
@@ -78,7 +78,7 @@ bot.on('message', (msg) => {
         return;
     }
 
-    bot.sendMessage(msg.chat.id, 'Are you on package? \n ፓኬጅ አየተጠቀሙ ነው?', {
+    bot.sendMessage(msg.chat.id, 'Are you on data package? \n በፓኬጅ አየተጠቀሙ ነው?', {
         reply_markup: {
             inline_keyboard: [
                 [{
@@ -108,11 +108,11 @@ bot.on('callback_query', (msg) => {
     } else if (c_data === 'step3') {
 
     } else if (c_data === 'p') {
-        bot.answerCallbackQuery(msg.from.id);
+
         returnPrice(fileSize, true, type, msg);
 
     } else if (c_data === 'noP') {
-        bot.answerCallbackQuery(msg.from.id);
+
         returnPrice(fileSize, false, type, msg);
 
     }

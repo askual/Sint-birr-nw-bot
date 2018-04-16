@@ -30,8 +30,8 @@ function calcPrice(size, p) {
     let rate = .35;
     let pak = 'on mobile data';
     if (p) {
-        rate = .23
-        pak = 'on data package'
+        rate = .23;
+        pak = 'on data package';
     }
     let cost = (rate * size) / 1048576;
     return cost.toFixed(2) + ' Birr';

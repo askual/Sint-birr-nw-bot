@@ -22,21 +22,31 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 
 
 
-
+let fileSize;
+let type;
 // There are 2 types 
 // Mebibyte = 1024^2 bytes but Megabyte = 1000^2 
-function calcPrice(size) {
-
-    let cost = (.35 * size) / 1048576;
+function calcPrice(size, p) {
+    let rate = .35;
+    if (p) {
+        rate = .23
+    }
+    let cost = (rate * size) / 1048576;
     return cost.toFixed(2) + ' Birr';
+
+
+}
+
+function returnPrice(size, p, type) {
+    let cnvrtd = calcPrice(size, p);
+    bot.sendMessage(msg.chat.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
 
 
 }
 
 bot.on('message', (msg) => {
 
-    let fileSize;
-    let type;
+
     if (msg.audio != null) {
         fileSize = msg.audio.file_size;
         type = 'audio'
@@ -68,9 +78,21 @@ bot.on('message', (msg) => {
         return;
     }
 
-    let cnvrtd = calcPrice(fileSize);
+    bot.sendMessage(msd.chat.id, 'Are you on package? \n ፓኬጅ አየተጠቀሙ ነው?', {
+        reply_markup: {
+            inline_keyboard: [
+                [{
+                    text: 'Yes',
+                    callback_data: 'p'
+                }],
+                [{
+                    text: 'No',
+                    callback_data: 'noP'
 
-    bot.sendMessage(msg.chat.id, `This ${type} file costs around **${cnvrtd}**`, { parse_mode: "markdown" });
+                }]
+            ]
+        }
+    })
 
 
 
@@ -84,6 +106,14 @@ bot.on('callback_query', (msg) => {
     } else if (c_data === 'step2') {
 
     } else if (c_data === 'step3') {
+
+    } else if (c_data === 'p') {
+        bot.answerCallbackQuery(msg.from.id);
+        returnPrice(fileSize, true, type);
+
+    } else if (c_data === 'noP') {
+        bot.answerCallbackQuery(msg.from.id);
+        returnPrice(fileSize, false, type);
 
     }
 

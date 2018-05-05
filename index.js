@@ -1,45 +1,36 @@
-// Heroku Set up
-const TOKEN = process.env.TELEGRAM_TOKEN || '486802239:AAFJMEJb7UB7Ys2GFE9yPoz5yQZyjf3Sja4';
+/**
+ * 
+ */
+
+const TOKEN = process.env.TELEGRAM_TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
 const TelegramBot = require('node-telegram-bot-api');
 const options = {
-    webHook: {
-        port: process.env.PORT
-    }
+    polling: true
 };
-
-const url = process.env.APP_URL || 'https://sintbirrnw.herokuapp.com:443';
 const bot = new TelegramBot(TOKEN, options);
-bot.setWebHook(`${url}/bot${TOKEN}`);
 
 
 
+let fileSize; // Size of the file we want to calculate the price for.
+let type; // type of the file 
+
+// Mebibyte = 1024^2 bytes(Binery) but Megabyte = 1000^2 bytes(SI) 
 
 
 
-
-
-
-
-
-
-let fileSize;
-let type;
-// There are 2 types 
-// Mebibyte = 1024^2 bytes but Megabyte = 1000^2 
-function calcPrice(size, p) {
+function calcPrice(size, isPackage) {
     let rate = .35;
-    let pak = 'on mobile data';
-    if (p) {
+    let str = 'on mobile data';
+    if (isPackage) {
         rate = .23;
-        pak = 'on data package';
+        str = 'on data package';
     }
     let cost = (rate * size) / 1048576;
 
-    return cost.toFixed(2) + ' Birr ' + pak;
-
-
+    return cost.toFixed(2) + ' Birr ' + str;
 
 }
+
 
 function returnPrice(size, p, type, msg) {
     let cnvrtd = calcPrice(size, p);
@@ -103,14 +94,14 @@ bot.on('message', (msg) => {
 
 })
 bot.on('callback_query', (msg) => {
-    let c_data = msg.data;
+    let c_data = msg.data; // callback data
 
     if (c_data === 'p') {
-
+        // using data package
         returnPrice(fileSize, true, type, msg);
 
     } else if (c_data === 'noP') {
-
+        // using mobile data
         returnPrice(fileSize, false, type, msg);
 
     }
